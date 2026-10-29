@@ -359,21 +359,13 @@
 
                     <img
                         id="profileImage"
-                        src="https://placehold.co/300x300/dce7ec/17384d?text=PROFILE"
+                        src="images/profile.jpg"
                         alt="รูปโปรไฟล์"
                     >
 
-                    <span id="uploadText">
-                        คลิกเพื่อเลือกรูปโปรไฟล์
-                    </span>
-
+                    
                 </label>
 
-                <input
-                    type="file"
-                    id="uploadImage"
-                    accept="image/*"
-                >
             </div>
 
             <!-- ข้อมูลติดต่อ -->
@@ -517,72 +509,25 @@
 
     <div class="gallery">
 
-        <!-- รูปที่ 1 -->
+        <!-- รูปผลงาน 1 -->
         <div class="gallery-item">
-            <label class="gallery-label" for="gallery1">
-                + เพิ่มรูปภาพ 1
-            </label>
-            <img id="image1"
-                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+1"
-                 alt="รูปภาพ 1"
-                 onclick="document.getElementById('gallery1').click()">
-            <input type="file" id="gallery1" accept="image/*"
-                   onchange="previewGalleryImage(event, 'image1')">
+            <img id="image1" src="images/portfolio1.jpg" alt="ผลงานที่ 1">
         </div>
 
-        <!-- รูปที่ 3 -->
+        <!-- รูปผลงาน 2 -->
         <div class="gallery-item">
-            <label class="gallery-label" for="gallery3">
-                + เพิ่มรูปภาพ 3
-            </label>
-            <img id="image3"
-                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+3"
-                 alt="รูปภาพ 3"
-                 onclick="document.getElementById('gallery3').click()">
-            <input type="file" id="gallery3" accept="image/*"
-                   onchange="previewGalleryImage(event, 'image3')">
+            <img id="image2" src="images/portfolio2.jpg" alt="ผลงานที่ 2">
         </div>
 
-        <!-- รูปที่ 4 -->
+        <!-- รูปผลงาน 3 -->
         <div class="gallery-item">
-            <label class="gallery-label" for="gallery4">
-                + เพิ่มรูปภาพ 4
-            </label>
-            <img id="image4"
-                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+4"
-                 alt="รูปภาพ 4"
-                 onclick="document.getElementById('gallery4').click()">
-            <input type="file" id="gallery4" accept="image/*"
-                   onchange="previewGalleryImage(event, 'image4')">
+            <img id="image3" src="images/portfolio3.jpg" alt="ผลงานที่ 3">
         </div>
 
-        <!-- รูปที่ 5 -->
+        <!-- รูปผลงาน 4 -->
         <div class="gallery-item">
-            <label class="gallery-label" for="gallery5">
-                + เพิ่มรูปภาพ 5
-            </label>
-            <img id="image5"
-                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+5"
-                 alt="รูปภาพ 5"
-                 onclick="document.getElementById('gallery5').click()">
-            <input type="file" id="gallery5" accept="image/*"
-                   onchange="previewGalleryImage(event, 'image5')">
+            <img id="image4" src="images/portfolio4.jpg" alt="ผลงานที่ 4">
         </div>
-
-        <!-- รูปที่ 6 -->
-        <div class="gallery-item">
-            <label class="gallery-label" for="gallery6">
-                + เพิ่มรูปภาพ 6
-            </label>
-            <img id="image6"
-                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+6"
-                 alt="รูปภาพ 6"
-                 onclick="document.getElementById('gallery6').click()">
-            <input type="file" id="gallery6" accept="image/*"
-                   onchange="previewGalleryImage(event, 'image6')">
-        </div>
-
-    </div>
 
 </section>
                 
@@ -596,177 +541,5 @@
 
     </div>
 
-   
-</script>
-<script>
-    // แสดงและบันทึกรูปภาพแกลเลอรี
-    function previewGalleryImage(event, imageId) {
-        const file = event.target.files[0];
-
-        if (!file) {
-            return;
-        }
-
-        if (!file.type.startsWith("image/")) {
-            alert("กรุณาเลือกไฟล์รูปภาพ");
-            event.target.value = "";
-            return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const imageData = e.target.result;
-
-            // แสดงรูปภาพ
-            const image = document.getElementById(imageId);
-            image.src = imageData;
-
-            // บันทึกรูปภาพลงใน localStorage
-            try {
-                localStorage.setItem("cv_" + imageId, imageData);
-
-                // ซ่อนข้อความเพิ่มรูปภาพ
-                const galleryItem = image.closest(".gallery-item");
-                galleryItem.classList.add("has-image");
-
-            } catch (error) {
-                alert("พื้นที่จัดเก็บรูปภาพเต็ม กรุณาเลือกรูปที่มีขนาดเล็กลง");
-            }
-        };
-
-        reader.readAsDataURL(file);
-    }
-
-    // โหลดรูปภาพที่เคยบันทึกไว้เมื่อเปิดหรือรีโหลดหน้าเว็บ
-    window.addEventListener("DOMContentLoaded", function () {
-        for (let i = 1; i <= 6; i++) {
-            const imageId = "image" + i;
-            const savedImage = localStorage.getItem("cv_" + imageId);
-            const image = document.getElementById(imageId);
-
-            if (savedImage && image) {
-                image.src = savedImage;
-
-                const galleryItem = image.closest(".gallery-item");
-
-                if (galleryItem) {
-                    galleryItem.classList.add("has-image");
-                }
-            }
-        }
-    });
-</script>
-<script>
-const DB_NAME = "CV_ImageDatabase";
-const STORE_NAME = "images";
-
-function openImageDB() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, 1);
-
-        request.onupgradeneeded = function () {
-            const db = request.result;
-
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME);
-            }
-        };
-
-        request.onsuccess = function () {
-            resolve(request.result);
-        };
-
-        request.onerror = function () {
-            reject(request.error);
-        };
-    });
-}
-
-async function saveImage(key, file) {
-    const db = await openImageDB();
-
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readwrite");
-
-        transaction.objectStore(STORE_NAME).put(file, key);
-
-        transaction.oncomplete = () => {
-            db.close();
-            resolve();
-        };
-
-        transaction.onerror = () => {
-            db.close();
-            reject(transaction.error);
-        };
-    });
-}
-
-async function loadImage(key) {
-    const db = await openImageDB();
-
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readonly");
-        const request = transaction.objectStore(STORE_NAME).get(key);
-
-        request.onsuccess = () => {
-            db.close();
-            resolve(request.result);
-        };
-
-        request.onerror = () => {
-            db.close();
-            reject(request.error);
-        };
-    });
-}
-
-async function displaySavedImage(key, imageElement, textElement) {
-    const savedFile = await loadImage(key);
-
-    if (savedFile) {
-        imageElement.src = URL.createObjectURL(savedFile);
-
-        if (textElement) {
-            textElement.style.display = "none";
-        }
-    }
-}
-
-// เลือกรูปโปรไฟล์
-const uploadImage = document.getElementById("uploadImage");
-const profileImage = document.getElementById("profileImage");
-const uploadText = document.getElementById("uploadText");
-
-uploadImage.addEventListener("change", async function () {
-    const file = this.files[0];
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-        alert("กรุณาเลือกไฟล์รูปภาพ");
-        this.value = "";
-        return;
-    }
-
-    try {
-        await saveImage("profile", file);
-        await displaySavedImage("profile", profileImage, uploadText);
-    } catch (error) {
-        alert("บันทึกรูปไม่สำเร็จ กรุณาลองเลือกรูปใหม่");
-        console.error(error);
-    }
-});
-
-// โหลดรูปโปรไฟล์เมื่อเปิดหรือรีเฟรชหน้า
-window.addEventListener("DOMContentLoaded", async function () {
-    try {
-        await displaySavedImage("profile", profileImage, uploadText);
-    } catch (error) {
-        console.error("โหลดรูปโปรไฟล์ไม่สำเร็จ", error);
-    }
-});
-</script>
-</body>
+   </body>
 </html>
