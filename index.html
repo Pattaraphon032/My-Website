@@ -1,11 +1,772 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My CV - ประวัติส่วนตัว</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            background: #e9eef1;
+            font-family: Arial, Tahoma, sans-serif;
+            color: #263640;
+        }
+
+        .cv {
+            max-width: 900px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 30% 70%;
+            background: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* ส่วนด้านซ้าย */
+        .sidebar {
+            background: #17384d;
+            color: white;
+            padding: 30px 24px;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .profile-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .profile-label img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            background: #dce7ec;
+            transition: opacity 0.2s;
+        }
+
+        .profile-label:hover img {
+            opacity: 0.85;
+        }
+
+        #uploadImage {
+            display: none;
+        }
+
+        #uploadText {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #cbdce4;
+        }
+
+        .sidebar h2 {
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid #9db3c0;
+            padding-bottom: 8px;
+            margin-top: 28px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar p,
+        .sidebar li {
+            font-size: 12px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-item {
+            margin-bottom: 12px;
+        }
+
+        .contact-item strong {
+            display: block;
+            color: #91cde3;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .sidebar ul {
+            padding-left: 18px;
+        }
+
+        .education-item {
+            margin-bottom: 18px;
+        }
+
+        .education-item strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .education-item span {
+            font-size: 11px;
+            line-height: 1.7;
+            color: #d4e0e7;
+        }
+
+        .skill {
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .skill-bar {
+            height: 5px;
+            background: #466274;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: #83c5dc;
+        }
+
+        /* ส่วนด้านขวา */
+        .main {
+            padding: 45px 40px;
+        }
+
+        .header {
+            border-bottom: 2px solid #17384d;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #17384d;
+            font-size: 35px;
+            margin: 0;
+            text-transform: uppercase;
+            overflow-wrap: anywhere;
+        }
+
+        .header h3 {
+            color: #65747d;
+            font-size: 13px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .header-line {
+            width: 50px;
+            height: 4px;
+            background: #83c5dc;
+            margin-top: 15px;
+        }
+
+        .main-section {
+            margin-bottom: 30px;
+        }
+
+        .main-section h2 {
+            font-size: 15px;
+            color: #17384d;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+        }
+
+        .main-section p {
+            font-size: 12px;
+            line-height: 1.9;
+            color: #5b6870;
+        }
+
+        .experience {
+            border-left: 2px solid #d6e0e5;
+            padding-left: 18px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .experience::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            background: #83c5dc;
+            border-radius: 50%;
+        }
+
+        .experience h3 {
+            font-size: 13px;
+            margin: 0 0 8px;
+            color: #263640;
+        }
+
+        .experience .position {
+            color: #56849a;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .experience .date {
+            font-size: 10px;
+            color: #85939b;
+        }
+
+        .experience ul {
+            padding-left: 18px;
+            color: #5b6870;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .reference {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .reference strong {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .reference span {
+            font-size: 11px;
+            line-height: 1.8;
+            color: #687780;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 1px dashed #83c5dc;
+            outline-offset: 2px;
+        }
+
+        /* รองรับมือถือ */
+        @media (max-width: 650px) {
+            body {
+                padding: 10px;
+            }
+
+            .cv {
+                grid-template-columns: 1fr;
+            }
+
+            .main {
+                padding: 30px 24px;
+            }
+
+            .sidebar {
+                padding: 30px 24px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+        /* ส่วนแกลเลอรีรูปภาพ */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.gallery-item {
+    width: 100%;
+    height: 145px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #e9eef1;
+    border: 1px solid #d6e0e5;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-item input {
+    display: none;
+}
+
+.gallery-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #526b79;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    padding: 8px;
+}
+
+.gallery-item.has-image .gallery-label {
+    display: none;
+}
+
+.gallery-item .gallery-label:hover {
+    background: rgba(131, 197, 220, 0.15);
+}
+
+@media (max-width: 650px) {
+    .gallery-item {
+        height: 125px;
+    }
+}
+    </style>
 </head>
+
 <body>
-    <h1 style="color: green;">Hello world</h1>
+
+    <div class="cv">
+
+        <!-- ข้อมูลด้านซ้าย -->
+        <aside class="sidebar">
+
+            <!-- รูปโปรไฟล์ -->
+            <div class="profile">
+                <label for="uploadImage" class="profile-label">
+
+                    <img
+                        id="profileImage"
+                        src="https://placehold.co/300x300/dce7ec/17384d?text=PROFILE"
+                        alt="รูปโปรไฟล์"
+                    >
+
+                    <span id="uploadText">
+                        คลิกเพื่อเลือกรูปโปรไฟล์
+                    </span>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="uploadImage"
+                    accept="image/*"
+                >
+            </div>
+
+            <!-- ข้อมูลติดต่อ -->
+            <section>
+                <h2>CONTACT</h2>
+
+                <div class="contact-item">
+                    <strong>PHONE</strong>
+                    <p contenteditable="true">091-889-2470</p>
+                </div>
+
+                <div class="contact-item">
+                    <strong>EMAIL</strong>
+                    <p contenteditable="true">68219010032@kbtc.ac.th</p>
+                </div>
+
+                <div class="contact-item">
+                    <strong>ADDRESS</strong>
+                    <p contenteditable="true">กระบี่ 81000</p>
+                    <p contenteditable="true">ต.ปากน้ำ อ.เมือง ถ.รอดบุญ บ.11/1</p>
+                </div>
+            </section>
+
+            <!-- ประวัติการศึกษา -->
+            <section>
+                <h2>EDUCATION</h2>
+
+                <div class="education-item">
+                    <strong contenteditable="true">
+                        สถานศึกษา / แผนก
+                    </strong>
+
+                    <span contenteditable="true">
+                        วิทยาลัยเทคนิคกระบี่ / เทคโนโรยีสารสนเทศ<br>
+                        พ.ศ. 2567 - ปัจจุบัน
+                    </span>
+                </div>
+
+                <div class="education-item">
+                    <strong contenteditable="true">
+                        สถานศึกษาก่อนหน้า
+                    </strong>
+
+                    <span contenteditable="true">
+                        อำมาตย์พานิชนกูล<br>
+                        พ.ศ. 2564 - 2567
+                    </span>
+                </div>
+            </section>
+
+            <!-- ทักษะ -->
+            <section>
+                <h2>SKILLS</h2>
+
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">ทักษะ การถ่ายรูป </span>
+                        <span>90%</span>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">ทักษะ การตัดต่อ</span>
+                        <span>85%</span>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">การออกแบบกราฟิกทักษะ </span>
+                        <span>70%</span>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">ทักษะ การเขียนโปรแกรม</span>
+                        <span>55%</span>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 55%;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ภาษา -->
+            <section>
+                <h2>LANGUAGES</h2>
+
+                <ul contenteditable="true">
+                    <li>ภาษาไทย </li>
+                    <li>ภาษาอังกฤษ </li>
+                    <li>ภาษารัสเซีย</li>
+                </ul>
+            </section>
+
+        </aside>
+
+        <!-- ข้อมูลด้านขวา -->
+        <main class="main">
+
+            <header class="header">
+
+                <h1 contenteditable="true">
+                    นาย ภัทรพล แสงนาฮาย
+                </h1>
+                <div class="header-line"></div>
+
+            </header>
+
+            <!-- แนะนำตัว -->
+            <section class="main-section">
+
+                <h2>จุดมุ่งหมาย</h2>
+
+                <p contenteditable="true">
+                   มีจุดมุ่งหมายในการทำงานSoftware Developer / Programmerหรือทำงานด้านสายfreeranceการเป็นช่างภาพและการออกแบบดีไซต์Web Designer / Developer
+                </p>
+
+            </section>
+
+            <!-- ประสบการณ์ -->
+            <section class="main-section">
+                <section class="main-section">
+
+    <h2>Portfolio</h2>
+
+    <div class="gallery">
+
+        <!-- รูปที่ 1 -->
+        <div class="gallery-item">
+            <label class="gallery-label" for="gallery1">
+                + เพิ่มรูปภาพ 1
+            </label>
+            <img id="image1"
+                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+1"
+                 alt="รูปภาพ 1"
+                 onclick="document.getElementById('gallery1').click()">
+            <input type="file" id="gallery1" accept="image/*"
+                   onchange="previewGalleryImage(event, 'image1')">
+        </div>
+
+        <!-- รูปที่ 3 -->
+        <div class="gallery-item">
+            <label class="gallery-label" for="gallery3">
+                + เพิ่มรูปภาพ 3
+            </label>
+            <img id="image3"
+                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+3"
+                 alt="รูปภาพ 3"
+                 onclick="document.getElementById('gallery3').click()">
+            <input type="file" id="gallery3" accept="image/*"
+                   onchange="previewGalleryImage(event, 'image3')">
+        </div>
+
+        <!-- รูปที่ 4 -->
+        <div class="gallery-item">
+            <label class="gallery-label" for="gallery4">
+                + เพิ่มรูปภาพ 4
+            </label>
+            <img id="image4"
+                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+4"
+                 alt="รูปภาพ 4"
+                 onclick="document.getElementById('gallery4').click()">
+            <input type="file" id="gallery4" accept="image/*"
+                   onchange="previewGalleryImage(event, 'image4')">
+        </div>
+
+        <!-- รูปที่ 5 -->
+        <div class="gallery-item">
+            <label class="gallery-label" for="gallery5">
+                + เพิ่มรูปภาพ 5
+            </label>
+            <img id="image5"
+                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+5"
+                 alt="รูปภาพ 5"
+                 onclick="document.getElementById('gallery5').click()">
+            <input type="file" id="gallery5" accept="image/*"
+                   onchange="previewGalleryImage(event, 'image5')">
+        </div>
+
+        <!-- รูปที่ 6 -->
+        <div class="gallery-item">
+            <label class="gallery-label" for="gallery6">
+                + เพิ่มรูปภาพ 6
+            </label>
+            <img id="image6"
+                 src="https://placehold.co/400x300/e9eef1/526b79?text=Photo+6"
+                 alt="รูปภาพ 6"
+                 onclick="document.getElementById('gallery6').click()">
+            <input type="file" id="gallery6" accept="image/*"
+                   onchange="previewGalleryImage(event, 'image6')">
+        </div>
+
+    </div>
+
+</section>
+                
+            </section>
+
+            <!-- ผลงาน -->
+
+            <!-- บุคคลอ้างอิง -->
+
+        </main>
+
+    </div>
+
+   
+</script>
+<script>
+    // แสดงและบันทึกรูปภาพแกลเลอรี
+    function previewGalleryImage(event, imageId) {
+        const file = event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            alert("กรุณาเลือกไฟล์รูปภาพ");
+            event.target.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageData = e.target.result;
+
+            // แสดงรูปภาพ
+            const image = document.getElementById(imageId);
+            image.src = imageData;
+
+            // บันทึกรูปภาพลงใน localStorage
+            try {
+                localStorage.setItem("cv_" + imageId, imageData);
+
+                // ซ่อนข้อความเพิ่มรูปภาพ
+                const galleryItem = image.closest(".gallery-item");
+                galleryItem.classList.add("has-image");
+
+            } catch (error) {
+                alert("พื้นที่จัดเก็บรูปภาพเต็ม กรุณาเลือกรูปที่มีขนาดเล็กลง");
+            }
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    // โหลดรูปภาพที่เคยบันทึกไว้เมื่อเปิดหรือรีโหลดหน้าเว็บ
+    window.addEventListener("DOMContentLoaded", function () {
+        for (let i = 1; i <= 6; i++) {
+            const imageId = "image" + i;
+            const savedImage = localStorage.getItem("cv_" + imageId);
+            const image = document.getElementById(imageId);
+
+            if (savedImage && image) {
+                image.src = savedImage;
+
+                const galleryItem = image.closest(".gallery-item");
+
+                if (galleryItem) {
+                    galleryItem.classList.add("has-image");
+                }
+            }
+        }
+    });
+</script>
+<script>
+const DB_NAME = "CV_ImageDatabase";
+const STORE_NAME = "images";
+
+function openImageDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+
+        request.onupgradeneeded = function () {
+            const db = request.result;
+
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME);
+            }
+        };
+
+        request.onsuccess = function () {
+            resolve(request.result);
+        };
+
+        request.onerror = function () {
+            reject(request.error);
+        };
+    });
+}
+
+async function saveImage(key, file) {
+    const db = await openImageDB();
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+
+        transaction.objectStore(STORE_NAME).put(file, key);
+
+        transaction.oncomplete = () => {
+            db.close();
+            resolve();
+        };
+
+        transaction.onerror = () => {
+            db.close();
+            reject(transaction.error);
+        };
+    });
+}
+
+async function loadImage(key) {
+    const db = await openImageDB();
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readonly");
+        const request = transaction.objectStore(STORE_NAME).get(key);
+
+        request.onsuccess = () => {
+            db.close();
+            resolve(request.result);
+        };
+
+        request.onerror = () => {
+            db.close();
+            reject(request.error);
+        };
+    });
+}
+
+async function displaySavedImage(key, imageElement, textElement) {
+    const savedFile = await loadImage(key);
+
+    if (savedFile) {
+        imageElement.src = URL.createObjectURL(savedFile);
+
+        if (textElement) {
+            textElement.style.display = "none";
+        }
+    }
+}
+
+// เลือกรูปโปรไฟล์
+const uploadImage = document.getElementById("uploadImage");
+const profileImage = document.getElementById("profileImage");
+const uploadText = document.getElementById("uploadText");
+
+uploadImage.addEventListener("change", async function () {
+    const file = this.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("กรุณาเลือกไฟล์รูปภาพ");
+        this.value = "";
+        return;
+    }
+
+    try {
+        await saveImage("profile", file);
+        await displaySavedImage("profile", profileImage, uploadText);
+    } catch (error) {
+        alert("บันทึกรูปไม่สำเร็จ กรุณาลองเลือกรูปใหม่");
+        console.error(error);
+    }
+});
+
+// โหลดรูปโปรไฟล์เมื่อเปิดหรือรีเฟรชหน้า
+window.addEventListener("DOMContentLoaded", async function () {
+    try {
+        await displaySavedImage("profile", profileImage, uploadText);
+    } catch (error) {
+        console.error("โหลดรูปโปรไฟล์ไม่สำเร็จ", error);
+    }
+});
+</script>
 </body>
 </html>
